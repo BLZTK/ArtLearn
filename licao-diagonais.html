@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Traços diagonais | ArtLearn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-licao="diagonais" data-tipo="diagonais" data-anterior="ondulados" data-proxima="trilhas.html">
+  <header class="topo">
+    <div class="topo-interno">
+      <a class="logo" href="index.html">Art<span>Learn</span></a>
+      <button class="botao-menu" id="botaoMenu" aria-label="Abrir menu">☰</button>
+      <nav class="menu" id="menu">
+        <a href="index.html" >Início</a>
+        <a href="projeto.html" >O projeto</a>
+        <a href="trilhas.html" class="atual">Trilhas</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div id="bloqueio" class="caixa oculto">
+      <h2>Lição bloqueada</h2>
+      <p>Termine a lição anterior com 70% ou mais para abrir esta.</p>
+      <a class="botao" href="trilhas.html">Voltar às trilhas</a>
+    </div>
+    <div id="area">
+      <h1>Traços diagonais</h1>
+      <div class="etapas">
+        <p class="subtitulo" id="etapa"></p>
+        <div class="pontos" id="pontos"><span></span><span></span><span></span></div>
+      </div>
+      <div class="mascote-fala">
+        <img src="img/mascote.png" alt="Mascote do ArtLearn">
+        <div class="balao">Puxe a linha de cima para baixo, com a mão firme.</div>
+      </div>
+      <canvas id="tela"></canvas>
+      <div class="controles">
+        <button class="botao" id="verificar">Verificar</button>
+        <button class="botao claro" id="limpar">Limpar</button>
+        <button class="botao oculto" id="seguinte">Próximo traço</button>
+      </div>
+      <div class="barra"><div id="barra"></div></div>
+      <p id="resultado">Desenhe por cima do guia e clique em Verificar.</p>
+      <p id="melhor"></p>
+      <a class="botao oculto" id="proxima" href="trilhas.html">Próxima lição</a>
+      <a class="botao claro" href="trilhas.html">Voltar às trilhas</a>
+    </div>
+  </main>
+  <footer class="rodape">ArtLearn, projeto de alunos da Fatec de Marília</footer>
+  <script src="script.js"></script>
+  <script src="licao.js"></script>
+</body>
+</html>

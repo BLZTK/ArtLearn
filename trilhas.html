@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trilhas | ArtLearn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body >
+  <header class="topo">
+    <div class="topo-interno">
+      <a class="logo" href="index.html">Art<span>Learn</span></a>
+      <button class="botao-menu" id="botaoMenu" aria-label="Abrir menu">☰</button>
+      <nav class="menu" id="menu">
+        <a href="index.html" >Início</a>
+        <a href="projeto.html" >O projeto</a>
+        <a href="trilhas.html" class="atual">Trilhas</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <h1>Trilhas</h1>
+    <p class="subtitulo">Complete uma lição com 70% ou mais para liberar a próxima.</p>
+    <div class="trilha">
+      <article class="card" data-licao="retos" data-anterior="">
+        <div class="icone"><svg viewBox="0 0 130 60" aria-hidden="true"><path d="M10 15h110M10 30h110M10 45h110"/></svg></div>
+        <h2>Traços retos</h2>
+        <p>Linhas horizontais firmes, de um lado ao outro.</p>
+        <div class="barra"><div></div></div>
+        <p class="status"></p>
+        <a class="botao" href="licao-retos.html">Abrir lição</a>
+      </article>
+      <article class="card" data-licao="ondulados" data-anterior="retos">
+        <div class="icone"><svg viewBox="0 0 130 60" aria-hidden="true"><path d="M8 20q14-24 28 0t28 0 28 0 28 0M8 44q14-24 28 0t28 0 28 0 28 0"/></svg></div>
+        <h2>Traços ondulados</h2>
+        <p>Ondas suaves, mantendo o ritmo da mão.</p>
+        <div class="barra"><div></div></div>
+        <p class="status"></p>
+        <a class="botao" href="licao-ondulados.html">Abrir lição</a>
+      </article>
+      <article class="card" data-licao="diagonais" data-anterior="ondulados">
+        <div class="icone"><svg viewBox="0 0 130 60" aria-hidden="true"><path d="M20 52l24-44M52 52l24-44M84 52l24-44"/></svg></div>
+        <h2>Traços diagonais</h2>
+        <p>Linhas inclinadas, de cima para baixo.</p>
+        <div class="barra"><div></div></div>
+        <p class="status"></p>
+        <a class="botao" href="licao-diagonais.html">Abrir lição</a>
+      </article>
+    </div>
+  </main>
+  <footer class="rodape">ArtLearn, projeto de alunos da Fatec de Marília</footer>
+  <script src="script.js"></script>
+</body>
+</html>
