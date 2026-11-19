@@ -126,15 +126,29 @@ function desenhar() {
   }
 }
 
+var verificado = false;
+var novaTentativa = false;
+
 canvas.addEventListener('pointerdown', function (e) {
   canvas.setPointerCapture(e.pointerId);
   tracoAtual = [[e.offsetX, e.offsetY, espessura(e)]];
-  tracos.push(tracoAtual);
+  if (verificado) {
+    novaTentativa = true;
+  } else {
+    tracos.push(tracoAtual);
+  }
 });
 
 canvas.addEventListener('pointermove', function (e) {
   if (!tracoAtual) {
     return;
+  }
+  if (novaTentativa) {
+    tracos = [tracoAtual];
+    novaTentativa = false;
+    verificado = false;
+    document.getElementById('barra').style.width = '0';
+    document.getElementById('barra').classList.remove('ok');
   }
   tracoAtual.push([e.offsetX, e.offsetY, espessura(e)]);
   desenhar();
@@ -142,10 +156,12 @@ canvas.addEventListener('pointermove', function (e) {
 
 canvas.addEventListener('pointerup', function () {
   tracoAtual = null;
+  novaTentativa = false;
 });
 
 canvas.addEventListener('pointercancel', function () {
   tracoAtual = null;
+  novaTentativa = false;
 });
 
 function espessura(e) {
@@ -240,17 +256,26 @@ function verificar() {
 
   var nota = calcularNota();
   barra.style.width = nota + '%';
+  verificado = true;
 
   if (nota >= minimo) {
-    notas[etapa] = nota;
+    barra.classList.add('ok');
+    var anterior = notas[etapa];
+    var aviso = 'Você passou!';
+    if (anterior && nota > anterior) {
+      aviso = 'Nova melhor nota!';
+    } else if (anterior) {
+      aviso = 'Sua melhor nota continua em ' + anterior + '%.';
+    }
+    if (!anterior || nota > anterior) {
+      notas[etapa] = nota;
+    }
     marcarFeito();
     if (!refazendo) {
       salvarTracos(licao, notas);
     }
-    barra.classList.add('ok');
-    botaoVerificar.classList.add('oculto');
     if (etapa < todas.length - 1) {
-      resultado.textContent = 'Precisão de ' + nota + '%. Você passou! Vamos para o próximo traço.';
+      resultado.textContent = 'Precisão de ' + nota + '%. ' + aviso + ' Pode tentar de novo para melhorar ou ir para o próximo traço.';
       seguinte.classList.remove('oculto');
     } else {
       var soma = 0;
@@ -263,12 +288,16 @@ function verificar() {
         p[licao] = media;
         localStorage.setItem('artlearn', JSON.stringify(p));
       }
-      resultado.textContent = 'Lição concluída! Sua média foi de ' + media + '%.';
+      resultado.textContent = 'Lição concluída! Sua média foi de ' + media + '%. Pode tentar melhorar o último traço.';
       proxima.classList.remove('oculto');
     }
   } else {
     barra.classList.remove('ok');
-    resultado.textContent = 'Precisão de ' + nota + '%. Precisa de ' + minimo + '% para passar. Tente de novo.';
+    if (notas[etapa] >= minimo) {
+      resultado.textContent = 'Precisão de ' + nota + '%. Sua melhor nota neste traço continua em ' + notas[etapa] + '%.';
+    } else {
+      resultado.textContent = 'Precisão de ' + nota + '%. Precisa de ' + minimo + '% para passar. Tente de novo.';
+    }
   }
   mostrarMelhor();
 }
@@ -303,13 +332,27 @@ document.getElementById('seguinte').addEventListener('click', function () {
   document.getElementById('barra').classList.remove('ok');
   document.getElementById('resultado').textContent = 'Desenhe por cima do guia e clique em Verificar.';
   document.getElementById('seguinte').classList.add('oculto');
-  document.getElementById('verificar').classList.remove('oculto');
+  mostrarMelhor();
 });
 
 function mostrarMelhor() {
-  var nota = lerProgresso()[licao];
-  if (nota) {
-    document.getElementById('melhor').textContent = 'Sua melhor nota: ' + nota + '%';
+  var texto = document.getElementById('melhor');
+  var p = lerProgresso()[licao];
+  var lista = [];
+  for (var i = 0; i < notas.length; i++) {
+    if (notas[i]) {
+      lista.push(notas[i] + '%');
+    }
+  }
+  if (lista.length > 0) {
+    texto.textContent = 'Notas dos traços: ' + lista.join(' · ');
+    if (p) {
+      texto.textContent = texto.textContent + ' · Melhor média da lição: ' + p + '%';
+    }
+  } else if (p) {
+    texto.textContent = 'Sua melhor média na lição: ' + p + '%';
+  } else {
+    texto.textContent = '';
   }
 }
 
@@ -317,8 +360,10 @@ document.getElementById('verificar').addEventListener('click', verificar);
 
 document.getElementById('limpar').addEventListener('click', function () {
   tracos = [];
+  verificado = false;
   desenhar();
   document.getElementById('barra').style.width = '0';
+  document.getElementById('barra').classList.remove('ok');
   document.getElementById('resultado').textContent = 'Desenhe por cima do guia e clique em Verificar.';
 });
 
